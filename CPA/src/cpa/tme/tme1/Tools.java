@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import cpa.struct.AdjArray;
-import cpa.struct.DAG;
-import cpa.struct.EdgeList;
 import cpa.struct.ElementList;
 import cpa.struct.List4DAG;
 import cpa.struct.Triangle;
