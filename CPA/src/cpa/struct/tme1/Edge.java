@@ -1,4 +1,4 @@
-package cpa.struct;
+package cpa.struct.tme1;
 
 public class Edge {
 	public final int id1, id2;

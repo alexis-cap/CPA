@@ -1,8 +1,8 @@
-package cpa.struct;
+package cpa.struct.tme1;
 
 public class ElementList {
 	public final int id;
-	private ElementList next;
+	protected ElementList next;
 	
 	
 	public ElementList(int id, ElementList next) {

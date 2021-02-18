@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import cpa.struct.AdjArray;
-import cpa.struct.ElementList;
-import cpa.struct.List4DAG;
-import cpa.struct.Triangle;
+import cpa.struct.tme1.AdjArray;
+import cpa.struct.tme1.ElementList;
+import cpa.struct.tme1.List4DAG;
+import cpa.struct.tme1.Triangle;
 
 public class Tools {
 

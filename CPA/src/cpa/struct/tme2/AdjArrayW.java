@@ -1,61 +1,39 @@
-package cpa.struct;
+package cpa.struct.tme2;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class DAG {
+public class AdjArrayW {
 
-	private List4DAG[] graph;
+	private LinkedList<Node> [] graph;
 	
-	public DAG(AdjArray adjArr) {
-		LinkedList<Integer> [] src = adjArr.getGraph();
-		graph = new List4DAG[src.length];
-		
-		for(int i=0; i < src.length; i++) {
-			if (src[i] != null) {
-				graph[i] = new List4DAG();
-				for(int k : src[i]) {
-					if (i < k) {
-						graph[i].insert(k);
-					}
-				}
-			}
-		}
-	}
-	
-	public DAG(File file) {
-		//initialisation du tableau
-		graph = new List4DAG[idMaxofEdgeListF(file) + 1];
-		
+	@SuppressWarnings("unchecked")
+	public AdjArrayW(File file) {
+		//initialisation du tableau 
+		graph = new LinkedList[idMaxofEdgeListF(file) + 1];
+
 		Scanner lecteur = null;
 		try {
 			lecteur = new Scanner(file);
-			int id1, id2,low, high;
+			int id1, id2;
 			while(lecteur.hasNext()) {
 				//recuperation des id de l'arrete
 				id1 = lecteur.nextInt();
 				id2 = lecteur.nextInt();
-				if (id1 < id2) {
-					low = id1;
-					high = id2;
-				} else {
-					low = id2;
-					high = id1;
-				}
 				//initialisation des Liste de voisins a la premiere arrete visiter
-				if(graph[low] == null) {
-					graph[low] = new List4DAG();
+				if(graph[id1] == null) {
+					graph[id1] = new LinkedList<Node>();
 				}
-				graph[low].insert(high);
+				graph[id1].add(new Node(id2));
 			}
 			lecteur.close();
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private int idMaxofEdgeListF(File f) {
 		int idMax = -1;
 		Scanner lecteur = null;
@@ -75,11 +53,11 @@ public class DAG {
 		return idMax;
 	}
 	
-	public List4DAG getListOfNeighbour(int i) {
+	public LinkedList<Node> getListOfNeighbour(int i) {
 		return graph[i];
 	}
 	
-	public List4DAG[] getGraph() {
+	public LinkedList<Node>[] getGraph() {
 		return graph;
 	}
 	
@@ -108,7 +86,7 @@ public class DAG {
 				cpt += graph[i].size();
 			}
 		}
-		return cpt;
+		return cpt / 2;
 	}
 
 	@Override
@@ -121,4 +99,7 @@ public class DAG {
 		}
 		return str + "}";
 	}
+	
+	
 }
+

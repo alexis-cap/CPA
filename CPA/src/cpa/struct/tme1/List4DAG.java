@@ -1,4 +1,4 @@
-package cpa.struct;
+package cpa.struct.tme1;
 
 public class List4DAG {
 	private ElementList first;
