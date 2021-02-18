@@ -1,16 +1,18 @@
-package cpa.struct.tme1;
+package cpa.struct.tme2;
 
-public class List4DAG {
+
+public class List4DAG extends cpa.struct.tme1.List4DAG {
+
 	protected ElementList first;
-	protected int sz;
 	
 	public List4DAG() {
-		first = null;
-		sz = 0;
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	
+
+	@Override
 	public void insert(int id) {
-		sz++;
+		this.sz++;
 		if (first == null) {
 			first = new ElementList(id);
 			return;
@@ -19,8 +21,7 @@ public class List4DAG {
 		if (id < first.id) {
 			ElementList tmp = new ElementList(id, first);
 			first = tmp;
-		}
-		
+		} 
 		ElementList n = first;
 		while(n.hasNext()) {
 			if (id < n.getNext().id) {
@@ -33,14 +34,11 @@ public class List4DAG {
 		n.setNext(new ElementList(id));
 	}
 
+	@Override
 	public ElementList getFirst() {
 		return first;
 	}
-
-	public int size() {
-		return sz;
-	}
-
+	
 	@Override
 	public String toString() {
 	
@@ -56,8 +54,4 @@ public class List4DAG {
 		str += "}";
 		return str;
 	}
-	
-	
-	
-	
 }

@@ -1,4 +1,4 @@
-package cpa.struct.tme1;
+package cpa.struct.tme2;
 
 import java.io.File;
 import java.io.IOException;

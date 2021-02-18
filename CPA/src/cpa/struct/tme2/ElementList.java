@@ -1,21 +1,32 @@
 package cpa.struct.tme2;
 
-import cpa.struct.tme1.ElementList;
 
-public class ElementW extends ElementList {
+public class ElementList extends cpa.struct.tme1.ElementList {
 
 	private int weight;
 
-	public ElementW(int id, int weight, ElementList next) {
+	public ElementList(int id, ElementList next) {
 		super(id, next);
-		this.weight = weight;
-	}
-	
-	public ElementW(int id, int weight) {
-		super(id);
-		this.weight = weight;
+		this.weight = 0;
 	}
 
+	public ElementList(int id) {
+		super(id);
+		this.weight = 0;
+	}
+	
+	@Override
+	public void setNext(cpa.struct.tme1.ElementList next) {
+		this.next = (ElementList) next;
+	}
+
+
+	@Override
+	public ElementList getNext() {
+		// TODO Auto-generated method stub
+		return (ElementList) next;
+	}
+	
 	public int getWeight() {
 		return weight;
 	}

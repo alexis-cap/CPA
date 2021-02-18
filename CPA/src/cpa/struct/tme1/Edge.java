@@ -26,6 +26,6 @@ public class Edge {
 
 	@Override
 	public String toString() {
-		return "Edge [id1=" + id1 + ", id2=" + id2 + "]";
+		return "Edge : (" + id1 + ", " + id2 + ")";
 	}
 }
