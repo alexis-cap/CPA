@@ -12,7 +12,7 @@ public class AdjArray {
 	@SuppressWarnings("unchecked")
 	public AdjArray(File file) {
 		//initialisation du tableau 
-		graph = new LinkedList[idMaxofEdgeListF(file)+1];
+		graph = new LinkedList[idMaxofEdgeListF(file) + 1];
 
 		Scanner lecteur = null;
 		try {
@@ -57,8 +57,16 @@ public class AdjArray {
 		return idMax;
 	}
 	
+	public LinkedList<Integer> getListOfNeighbour(int i) {
+		return graph[i];
+	}
+	
 	public LinkedList<Integer>[] getGraph() {
 		return graph;
+	}
+	
+	public int size() {
+		return graph.length;
 	}
 	
 	public int getIdMax() {
