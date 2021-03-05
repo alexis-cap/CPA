@@ -11,6 +11,14 @@ public class EdgeList {
 	protected Set<Edge> graph;
 	protected int idMax;
 	
+	
+	
+	protected EdgeList() {
+		super();
+		this.graph = new HashSet<Edge>();
+		this.idMax = -1;
+	}
+
 	public EdgeList(File file) {
 		idMax = -1;
 		Scanner lecteur = null;

@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 public class AdjArrayW {
 
-	private LinkedList<Node> [] graph;
+	private LinkedList<Integer> [] graph;
+	private double [] weight;
 	
 	@SuppressWarnings("unchecked")
 	public AdjArrayW(File file) {
@@ -24,15 +25,50 @@ public class AdjArrayW {
 				id2 = lecteur.nextInt();
 				//initialisation des Liste de voisins a la premiere arrete visiter
 				if(graph[id1] == null) {
-					graph[id1] = new LinkedList<Node>();
+					graph[id1] = new LinkedList<Integer>();
 				}
-				graph[id1].add(new Node(id2));
+				if(graph[id2] == null) {
+					graph[id2] = new LinkedList<Integer>();
+				}
+				graph[id1].add(id2);
 			}
 			lecteur.close();
+			//initialisation des poids
+			weight = new double [graph.length];
+			int nbNodes = this.nbNodes();
+			for(int i=0; i < graph.length; i++) {
+				if(graph[i] != null) {
+					weight[i] = 1/nbNodes;
+				}
+			}
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
+
+	public double[] getWeight() {
+		return weight;
+	}
+
+
+
+	public void setWeight(double[] weight) {
+		this.weight = weight;
+	}
+	
+	public double getWeightOfNodes(int id) {
+		return weight[id];
+	}
+
+
+
+	public void setWeightOfNodes(int id, double weight) {
+		this.weight[id] = weight;
+	}
+
+
 
 	private int idMaxofEdgeListF(File f) {
 		int idMax = -1;
@@ -53,11 +89,11 @@ public class AdjArrayW {
 		return idMax;
 	}
 	
-	public LinkedList<Node> getListOfNeighbour(int i) {
+	public LinkedList<Integer> getListOfNeighbour(int i) {
 		return graph[i];
 	}
 	
-	public LinkedList<Node>[] getGraph() {
+	public LinkedList<Integer>[] getGraph() {
 		return graph;
 	}
 	
@@ -102,4 +138,3 @@ public class AdjArrayW {
 	
 	
 }
-
