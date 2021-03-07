@@ -1,7 +1,9 @@
 package cpa.tme.tme2;
 
 import java.util.LinkedList;
+import java.util.List;
 
+import cpa.struct.tme1.Edge;
 import cpa.struct.tme2.*;
 
 public class Tools {
@@ -13,7 +15,7 @@ public class Tools {
 		double[] b = createRandomVec(m.getIdMax() + 1);
 		//Calcule produit Matriciel
 		for(Edge e : m.getGraph()) {
-			b[e.id1] += e.getWeight() + a[e.id2];
+			b[e.id1] += m.getWeightOf(e.id2) + a[e.id2];
 		}
 		return b;
 	}
@@ -36,7 +38,7 @@ public class Tools {
 	private static double[] createRandomVec(int sz) {
 		double [] b = new double[sz];
 		for(int i=0; i < b.length; i++) {
-			b[i] = 0;
+			b[i] = Math.random();
 		}
 		return b;
 	}
@@ -44,7 +46,7 @@ public class Tools {
 	private static void normalize(double [] a) {
 		double norme = 0;
 		for(double e : a) {
-			norme = Math.pow(e, 2);
+			norme += Math.pow(e, 2);
 		}
 		norme = Math.sqrt(norme);
 		
@@ -53,13 +55,17 @@ public class Tools {
 		}
 	}
 	
-	public static double [] powerIteration(AdjArrayW m, int t) {
-		//initialisation de a
-		double [] a = new double[m.size()];
-		for(int i = 0 ; i < a.length; i++) {
-			a[i] = Math.random();
+	public static double [] powerIteration(AdjArrayW m, double alpha, int t) {
+		double [] a = createRandomVec(m.size());
+		for (int i=0; i < t; i++) {
+			a = prodMatVec(m, a);
+			normalize(a);
 		}
-		
+		return a;
+	}
+	
+	public static double [] powerIteration(EdgeList m, int t) {
+		double [] a = createRandomVec(m.getIdMax() + 1);
 		for (int i=0; i < t; i++) {
 			a = prodMatVec(m, a);
 			normalize(a);
@@ -68,20 +74,60 @@ public class Tools {
 	}
 	
 	public static void pageRank(AdjArrayW graph, double alpha, int iter) {
-		// Initialisation du marcheur aleatoire
-		int walker = -1;
-		while(walker == -1) {
-			walker = (int) (Math.random() * graph.size());
-			if(graph.getListOfNeighbour(walker) == null) {
-				walker = -1;
-			}
-		}
+		
+		LinkedList<Integer>[] g = graph.getGraph();
+		double [] tmpWeight;
+		
 		for(int i=0; i < iter; i++) {
+			tmpWeight = new double [g.length];
+			for(int j=0; j < g.length; i++) {
+				if(g[j] != null) {
+					for(int id : g[j]) {
+						tmpWeight[id] += graph.getWeightOfNodes(j) / g[j].size();
+					}
+				}
+			}
+			int n = graph.nbNodes();
+			for(int j=0; j < g.length; i++) {
+				if(g[j] != null) {
+					tmpWeight[j] = (1-alpha) * tmpWeight[j] + alpha / n ;
+				}
+			}
 			
+			graph.setWeight(tmpWeight);
+		}
+	}
+	
+	private void normalize2(double [] p,AdjArrayW graph) {
+		double norme = 0;
+		for(double e : a) {
+			norme += Math.pow(e, 2);
+		}
+		norme = Math.sqrt(norme);
+		int n = graph.nbNodes();
+		for(int i = 0; i < p .length; i++) {
+			if(graph.getListOfNeighbour(i) != null) {
+				p[i] += (1-norme) / n;
+			}
 		}
 		
 	}
 	
+	
+	public static double [] powerIteration4PR(AdjArrayW graph, double alpha, int t) {
+		int n = graph.nbNodes();
+		double [] p = new double[graph.size()];
+		for(int i=0; i < p.length; i++) {
+			if(graph.getListOfNeighbour(i) != null) {
+				p[i] = Math.pow(1.0/n, 2);
+			}
+		}
+		for (int i=0; i < t; i++) {
+			p = prodMatVec(graph, p);
+			normalize(p);
+		}
+		return p;
+	}
 	
 	
 }

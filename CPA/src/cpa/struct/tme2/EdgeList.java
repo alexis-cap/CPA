@@ -1,67 +1,38 @@
 package cpa.struct.tme2;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.Collections;
 
-public class EdgeList {
-	
-	protected Set<Edge> graph;
-	protected int idMax;
-	
+
+public class EdgeList extends cpa.struct.tme1.EdgeList {
+
+	private double [] weight;
+
+
 	public EdgeList(File file) {
-		idMax = -1;
-		Scanner lecteur = null;
-		try {
-			lecteur = new Scanner(file);
-			graph = new HashSet<Edge>();
-			int id1, id2;
-			while(lecteur.hasNext()) {
-				//recuperation des id de l'arrete
-				id1 = lecteur.nextInt();
-				id2 = lecteur.nextInt();
-				//M.A.J idMAX
-				if(idMax < id1) { idMax = id1; }
-				if(idMax < id2) { idMax = id2; }
-				//ajout d'une nouvelle arrete
-				graph.add(new Edge(id1, id2));
-			}
-			lecteur.close();
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
+		super(file);
+		weight = new double[this.idMax + 1];
+		Collections.sort(this.graph, new ComparatorEdge());
 	}
 
-	public Set<Edge> getGraph() {
-		return graph;
+
+	public double[] getWeight() {
+		return weight;
 	}
 
-	public int getIdMax() {
-		return idMax;
+
+	public void setWeight(double[] weight) {
+		this.weight = weight;
 	}
 	
-	public int nbEdges() {
-		return graph.size();
-	}
-	
-	public int nbNodes() {
-		Set<Integer> nodes = new HashSet<Integer>();
-		for(Edge e : graph) {
-			nodes.add(e.id1);
-			nodes.add(e.id2);
-		}
-		return nodes.size();
+	public double getWeightOf(int id) {
+		return weight[id];
 	}
 
-	@Override
-	public String toString() {
-		String str = "EdgeList : idMax=" + idMax + ", nbEdges()=" + nbEdges() + ", nbNodes()=" + nbNodes() + "\ngraph = {\n" ;
-		for(Edge e : graph) {
-			str += "\t" + e + "\n";
-		}
-		return str + "}";
+
+	public void setWeightOf(int id, double weight) {
+		this.weight[id] = weight;
 	}
 	
 }
+

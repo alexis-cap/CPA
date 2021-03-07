@@ -3,19 +3,21 @@ package cpa.struct.tme1;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
 public class EdgeList {
 	
-	protected Set<Edge> graph;
+	protected List<Edge> graph;
 	protected int idMax;
 	
 	
 	
 	protected EdgeList() {
 		super();
-		this.graph = new HashSet<Edge>();
+		this.graph = new LinkedList<Edge>();
 		this.idMax = -1;
 	}
 
@@ -24,7 +26,7 @@ public class EdgeList {
 		Scanner lecteur = null;
 		try {
 			lecteur = new Scanner(file);
-			graph = new HashSet<Edge>();
+			graph = new LinkedList<Edge>();
 			int id1, id2;
 			while(lecteur.hasNext()) {
 				//recuperation des id de l'arrete
@@ -42,7 +44,7 @@ public class EdgeList {
 		}
 	}
 
-	public Set<Edge> getGraph() {
+	public List<Edge> getGraph() {
 		return graph;
 	}
 

@@ -47,6 +47,7 @@ public class AdjArrayW {
 	}
 	
 	
+	
 
 	public double[] getWeight() {
 		return weight;
@@ -96,6 +97,7 @@ public class AdjArrayW {
 	public LinkedList<Integer>[] getGraph() {
 		return graph;
 	}
+	
 	
 	public int size() {
 		return graph.length;
