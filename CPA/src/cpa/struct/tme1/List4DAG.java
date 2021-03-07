@@ -11,17 +11,18 @@ public class List4DAG {
 	
 	public void insert(int id) {
 		sz++;
-		if (first == null) {
-			first = new ElementList(id);
+		if (this.first == null) {
+			this.first = new ElementList(id);
 			return;
 		}
 		
 		if (id < first.id) {
 			ElementList tmp = new ElementList(id, first);
-			first = tmp;
+			this.first = tmp;
+			return;
 		}
 		
-		ElementList n = first;
+		ElementList n = this.first;
 		while(n.hasNext()) {
 			if (id < n.getNext().id) {
 				ElementList tmp = new ElementList(id, n.getNext());
@@ -44,14 +45,14 @@ public class List4DAG {
 	@Override
 	public String toString() {
 	
-		String str = "List4DAG [sz=" + sz + "list={";
+		String str = "List4DAG [sz = " + sz + " list={";
 		ElementList n = first;
-		while (n.hasNext()) {
+		while (n!= null) {
 			str += n.id;
-			n = n.getNext();
 			if(n.hasNext()) {
 				str += ", ";
 			}
+			n = n.getNext();
 		}
 		str += "}";
 		return str;

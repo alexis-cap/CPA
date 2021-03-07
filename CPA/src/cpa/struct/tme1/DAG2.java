@@ -6,30 +6,29 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class DAG {
+public class DAG2 {
 
-	protected LinkedList<Integer> [] graph;
+	protected List4DAG [] graph;
 	
-	public DAG(AdjArray adjArr) {
+	public DAG2(AdjArray adjArr) {
 		LinkedList<Integer> [] src = adjArr.getGraph();
-		graph = new LinkedList[src.length];
+		graph = new List4DAG[src.length];
 		
 		for(int i=0; i < src.length; i++) {
 			if (src[i] != null) {
-				graph[i] = new LinkedList<Integer>();
+				graph[i] = new List4DAG();
 				for(int k : src[i]) {
 					if (i < k) {
-						graph[i].add(k);
+						graph[i].insert(k);
 					}
 				}
-				Collections.sort(graph[i]);
 			}
 		}
 	}
 	
-	public DAG(File file) {
+	public DAG2(File file) {
 		//initialisation du tableau
-		graph = new LinkedList[idMaxofEdgeListF(file) + 1];
+		graph = new List4DAG[idMaxofEdgeListF(file) + 1];
 		
 		Scanner lecteur = null;
 		try {
@@ -43,13 +42,7 @@ public class DAG {
 				//recuperation des id de l'arrete
 				id1 = lecteur.nextInt();
 				id2 = lecteur.nextInt();
-				//initialisation des Liste de voisins a la premiere arrete visiter
-				if(graph[id1] == null) {
-					graph[id1] = new LinkedList<Integer>();
-				}
-				if(graph[id2] == null) {
-					graph[id2] = new LinkedList<Integer>();
-				}
+				
 				//comparaison des id
 				if (id1 < id2) {
 					low = id1;
@@ -59,13 +52,15 @@ public class DAG {
 					high = id1;
 				}
 				
-				graph[low].add(high);
+				//initialisation des Liste de voisins a la premiere arrete visiter
+				if(graph[low] == null) {
+					graph[low] = new List4DAG();
+				}
+				
+				graph[low].insert(high);
 			}
 			lecteur.close();
 			
-			for(int i=0; i < graph.length; i++) {
-				if (graph[i] != null) {Collections.sort(graph[i]);}
-			}
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -95,11 +90,11 @@ public class DAG {
 		return idMax;
 	}
 	
-	public LinkedList<Integer> getListOfNeighbour(int i) {
+	public List4DAG getListOfNeighbour(int i) {
 		return graph[i];
 	}
 	
-	public LinkedList<Integer>[] getGraph() {
+	public List4DAG[] getGraph() {
 		return graph;
 	}
 	

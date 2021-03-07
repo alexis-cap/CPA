@@ -7,6 +7,7 @@ import java.util.Set;
 
 import cpa.struct.tme1.AdjArray;
 import cpa.struct.tme1.DAG;
+import cpa.struct.tme1.DAG2;
 import cpa.struct.tme1.ElementList;
 import cpa.struct.tme1.List4DAG;
 import cpa.struct.tme1.Triangle;
@@ -90,6 +91,54 @@ public class Tools {
 		}
 		return triangles;
 	}
+	
+	
+	public static Set<Triangle> listTriangle(DAG2 dag) {
+		Set<Triangle> triangles = new HashSet<Triangle>();
+		List4DAG[] graph = dag.getGraph();
+		//parcours tous les noeuds du graph
+		for(int i=0; i < graph.length; i++) {
+			if(graph[i] != null) {
+				ElementList n = graph[i].getFirst();
+				//parcours des voisins
+				while(n != null) {
+					//cherche le noeud commun
+					Set<Integer> commun = compareList(n, graph[n.id]);
+					for(int k : commun) {
+						triangles.add(new Triangle(i, n.id, k));
+					}
+					n = n.getNext();
+				}
+			}
+				
+		}
+		return triangles;
+	}
+	
+	public static Set<Integer> compareList(ElementList n, List4DAG l) {
+		Set<Integer> res = new HashSet<Integer>();
+		
+		if(l != null && n != null) { 
+			
+			ElementList n1 = n, n2 = l.getFirst();
+			
+			while(n1 != null && n2 != null) {
+				if(n1.id == n2.id) {
+					res.add(n1.id);
+					n1 = n1.getNext();
+					n2 = n2.getNext();
+				}
+				else if (n1.id < n2.id) {
+					n1 = n1.getNext();
+				} else {
+					n2 = n2.getNext();
+				}
+			}
+		}
+		return res;
+	}
+	
+	
 	
 	public static Set<Integer> compareList(LinkedList<Integer> l1, LinkedList<Integer> l2) {
 		Set<Integer> res = new HashSet<Integer>();
