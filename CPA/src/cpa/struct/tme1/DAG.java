@@ -7,18 +7,18 @@ import java.util.Scanner;
 
 public class DAG {
 
-	protected List4DAG[] graph;
+	protected LinkedList<Integer> [] graph;
 	
 	public DAG(AdjArray adjArr) {
 		LinkedList<Integer> [] src = adjArr.getGraph();
-		graph = new List4DAG[src.length];
+		graph = new LinkedList[src.length];
 		
 		for(int i=0; i < src.length; i++) {
 			if (src[i] != null) {
-				graph[i] = new List4DAG();
+				graph[i] = new LinkedList<Integer>();
 				for(int k : src[i]) {
 					if (i < k) {
-						graph[i].insert(k);
+						graph[i].add(k);
 					}
 				}
 			}
@@ -27,16 +27,28 @@ public class DAG {
 	
 	public DAG(File file) {
 		//initialisation du tableau
-		graph = new List4DAG[idMaxofEdgeListF(file) + 1];
+		graph = new LinkedList[idMaxofEdgeListF(file) + 1];
 		
 		Scanner lecteur = null;
 		try {
 			lecteur = new Scanner(file);
 			int id1, id2,low, high;
+			
+			while(!lecteur.hasNextInt()) {
+				lecteur.nextLine();
+			}
 			while(lecteur.hasNext()) {
 				//recuperation des id de l'arrete
 				id1 = lecteur.nextInt();
 				id2 = lecteur.nextInt();
+				//initialisation des Liste de voisins a la premiere arrete visiter
+				if(graph[id1] == null) {
+					graph[id1] = new LinkedList<Integer>();
+				}
+				if(graph[id2] == null) {
+					graph[id2] = new LinkedList<Integer>();
+				}
+				//comparaison des id
 				if (id1 < id2) {
 					low = id1;
 					high = id2;
@@ -44,11 +56,8 @@ public class DAG {
 					low = id2;
 					high = id1;
 				}
-				//initialisation des Liste de voisins a la premiere arrete visiter
-				if(graph[low] == null) {
-					graph[low] = new List4DAG();
-				}
-				graph[low].insert(high);
+				
+				graph[low].add(high);
 			}
 			lecteur.close();
 		}catch(IOException e) {
@@ -62,6 +71,11 @@ public class DAG {
 		try {
 			lecteur = new Scanner(f);
 			int tmp;
+			
+			while(!lecteur.hasNextInt()) {
+				lecteur.nextLine();
+			}
+			
 			while(lecteur.hasNext()) {
 				//recuperation des id de l'arrete
 				tmp = lecteur.nextInt();
@@ -75,11 +89,11 @@ public class DAG {
 		return idMax;
 	}
 	
-	public List4DAG getListOfNeighbour(int i) {
+	public LinkedList<Integer> getListOfNeighbour(int i) {
 		return graph[i];
 	}
 	
-	public List4DAG[] getGraph() {
+	public LinkedList<Integer>[] getGraph() {
 		return graph;
 	}
 	

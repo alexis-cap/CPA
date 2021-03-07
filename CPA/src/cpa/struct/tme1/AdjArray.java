@@ -18,6 +18,11 @@ public class AdjArray {
 		try {
 			lecteur = new Scanner(file);
 			int id1, id2;
+			int cpt = 0;
+			while(!lecteur.hasNextInt()) {
+				lecteur.nextLine();
+			}
+			
 			while(lecteur.hasNext()) {
 				//recuperation des id de l'arrete
 				id1 = lecteur.nextInt();
@@ -44,6 +49,9 @@ public class AdjArray {
 		try {
 			lecteur = new Scanner(f);
 			int tmp;
+			while(!lecteur.hasNextInt()) {
+				lecteur.nextLine();
+			}
 			while(lecteur.hasNext()) {
 				//recuperation des id de l'arrete
 				tmp = lecteur.nextInt();

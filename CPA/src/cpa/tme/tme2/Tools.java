@@ -98,9 +98,9 @@ public class Tools {
 		}
 	}
 	
-	private void normalize2(double [] p,AdjArrayW graph) {
+	private static  void normalize2(double [] p,AdjArrayW graph) {
 		double norme = 0;
-		for(double e : a) {
+		for(double e : p) {
 			norme += Math.pow(e, 2);
 		}
 		norme = Math.sqrt(norme);
@@ -124,7 +124,7 @@ public class Tools {
 		}
 		for (int i=0; i < t; i++) {
 			p = prodMatVec(graph, p);
-			normalize(p);
+			normalize2(p, graph);
 		}
 		return p;
 	}

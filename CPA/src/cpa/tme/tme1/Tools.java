@@ -1,10 +1,12 @@
 package cpa.tme.tme1;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
 import cpa.struct.tme1.AdjArray;
+import cpa.struct.tme1.DAG;
 import cpa.struct.tme1.ElementList;
 import cpa.struct.tme1.List4DAG;
 import cpa.struct.tme1.Triangle;
@@ -70,43 +72,50 @@ public class Tools {
 		return max;
 	}
 	
-	public static Set<Triangle> listTriangle(List4DAG[] dag) {
+	public static Set<Triangle> listTriangle(DAG dag) {
 		Set<Triangle> triangles = new HashSet<Triangle>();
+		LinkedList<Integer>[] graph = dag.getGraph();
 		//parcours tous les noeuds du graph
-		for(int i=0; i < dag.length; i++) {
-			if(dag[i] != null) {
-				ElementList n = dag[i].getFirst();
-				//parcurs les voisins directs
-				while(n.hasNext()) {
-					//recherche des noeuds communs avec ces voisins directs
-					Set<Integer> commun = compareListDag(n, dag[n.id]);
+		for(int i=0; i < graph.length; i++) {
+			
+			if(graph[i] != null) {
+				for(int j : graph[i]) {
+				Set<Integer> commun = compareList(graph[i], graph[j]);
 					for (int k : commun) {
 						//ajout des triangles trouver
-						triangles.add(new Triangle(i, n.id, k));
+						triangles.add(new Triangle(i, j, k));
 					}
 				}
 			}
-			
 		}
 		return triangles;
 	}
 	
-	public static Set<Integer> compareListDag(ElementList n, List4DAG l) {
+	public static Set<Integer> compareList(LinkedList<Integer> l1, LinkedList<Integer> l2) {
 		Set<Integer> res = new HashSet<Integer>();
-		ElementList n1 = n, n2 = l.getFirst();
 		
-		while(n1.hasNext() && n2.hasNext()) {
-			if(n1.id == n2.id) {
-				res.add(n1.id);
-				n1 = n1.getNext();
-				n2 = n2.getNext();
-			} else if (n1.id < n2.id) {
-				n1 = n1.getNext();
-			} else {
-				n2 = n2.getNext();
+		if(l1 != null && l2 != null && !l1.isEmpty() && !l2.isEmpty()) { 
+			Iterator<Integer> it1 = l1.iterator();
+			Iterator<Integer> it2 = l2.iterator();
+			int n1 = it1.next(), n2 = it2.next();
+			
+			while(it1.hasNext() && it2.hasNext()) {
+				if(n1 == n2) {
+					res.add(n1);
+					n1 = it1.next();
+					n2 = it2.next();
+				}
+				else if (n1 < n2) {
+					n1 = it1.next();
+				} else {
+					n2 = it2.next();
+				}
+			}
+			
+			if(n1 == n2) {
+				res.add(n1);
 			}
 		}
-		
 		return res;
 	}
 	
