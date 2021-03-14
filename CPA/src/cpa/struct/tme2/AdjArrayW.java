@@ -56,7 +56,9 @@ public class AdjArrayW {
 
 
 	public void setWeight(double[] weight) {
-		this.weight = weight;
+		for(int i=0; i < weight.length; i++) {
+			this.weight[i] = weight[i];
+		}
 	}
 	
 	public double getWeightOfNodes(int id) {

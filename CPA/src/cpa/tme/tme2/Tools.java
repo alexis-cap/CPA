@@ -10,6 +10,69 @@ public class Tools {
 
 	private Tools() {}
 	
+	
+	public static int powerIteration4PR(AdjArrayW graph, double alpha, double epsilon) {
+		
+		int iteration = 0; // nombre d'iteration
+		int n = graph.nbNodes();
+		//initialisation de p
+		double [] p = new double[graph.size()];
+		for(int i=0; i < p.length; i++) {
+			if(graph.getListOfNeighbour(i) != null) {
+				p[i] = 1/n;
+			}
+		}
+		boolean converged = false;
+		while(!converged) {
+			p = prodTransitionMatVec(graph, p);
+			// P = (1 − alpha) * P + alpha * I
+			for(int j=0; j < p.length; j++) {
+				if(graph.getListOfNeighbour(j) != null) {
+					p[j] = (1-alpha) * p[j] + alpha * 1.0/n;
+				}
+			}
+			normalize2(p, graph);
+			converged = hasConverged(graph, p, epsilon);
+			iteration++;
+			graph.setWeight(p);
+		}
+		return iteration;
+	}
+	private static boolean hasConverged(AdjArrayW graph, double[] p, double epsilon) {
+		double[] g = graph.getWeight();
+		for (int i = 0; i < graph.size(); i++) {
+			if(graph.getListOfNeighbour(i) != null) {
+				if(epsilon - g[i] > p[i] || epsilon + g[i] < p[i]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	// prduit de la matrice de transition d'un graph et d'un vecteur
+	private static double[] prodTransitionMatVec(AdjArrayW graph, double[] a) {
+		//initialisation de b
+		double[] b = new double[graph.size()];
+		//Calcule produit Matriciel
+		LinkedList<Integer>[] g = graph.getGraph();
+		for(int i=0; i < g.length; i++) {
+			if(g[i]!=null) {
+				double t = 1.0 / g[i].size();
+				for(int j : g[i]) {
+					b[i] += t  * a[j];
+				}
+			}
+		}
+		return b;
+	}
+	
+	
+	
+	
+	
+	// Essaie 
+	
 	public static double [] prodMatVec(EdgeList m, double [] a) {
 		//initialisation de b
 		double[] b = createRandomVec(m.getIdMax() + 1);
@@ -22,13 +85,13 @@ public class Tools {
 	
 	public static double [] prodMatVec(AdjArrayW m, double [] a) {
 		//initialisation de b
-		double[] b = createRandomVec(m.size());
+		double[] b = new double[m.size()];
 		//Calcule produit Matriciel
 		LinkedList<Integer>[] graph = m.getGraph();
 		for(int i=0; i < graph.length; i++) {
 			if(graph[i]!=null) {
-				for(int n : graph[i]) {
-					b[i] = m.getWeightOfNodes(n) + a[n];
+				for(int j : graph[i]) {
+					b[i] += m.getWeightOfNodes(i) / graph[i].size()  * a[j];
 				}
 			}
 		}
@@ -73,7 +136,7 @@ public class Tools {
 		return a;
 	}
 	
-	public static void pageRank(AdjArrayW graph, double alpha, int iter) {
+	public static void pageRankIter(AdjArrayW graph, double alpha, int iter) {
 		
 		LinkedList<Integer>[] g = graph.getGraph();
 		double [] tmpWeight;
@@ -88,7 +151,7 @@ public class Tools {
 				}
 			}
 			int n = graph.nbNodes();
-			for(int j=0; j < g.length; i++) {
+			for(int j=0; j < g.length; j++) {
 				if(g[j] != null) {
 					tmpWeight[j] = (1-alpha) * tmpWeight[j] + alpha / n ;
 				}
@@ -96,6 +159,38 @@ public class Tools {
 			
 			graph.setWeight(tmpWeight);
 		}
+	}
+	
+	public static int pageRankEps(AdjArrayW graph, double alpha, double epsilon) {
+		
+		LinkedList<Integer>[] g = graph.getGraph();
+		double [] tmpWeight;
+		boolean encore = true;
+		int cpt = 0;
+		int n = graph.nbNodes();
+		
+		while(encore) {
+			encore = false;
+			cpt++;
+			tmpWeight = new double [g.length];
+			for(int j=0; j < g.length; j++) {
+				if(g[j] != null) {
+					for(int id : g[j]) {
+						tmpWeight[id] += graph.getWeightOfNodes(j) / g[j].size();
+					}
+				}
+			}
+			for(int j=0; j < g.length; j++) {
+				if(g[j] != null) {
+					tmpWeight[j] = (1-alpha) * tmpWeight[j] + alpha / n ;
+					if(tmpWeight[j] - epsilon <= graph.getWeightOfNodes(j) && graph.getWeightOfNodes(j) <= tmpWeight[j] + epsilon ) {
+						encore = true;
+					}
+				}
+			}
+			graph.setWeight(tmpWeight);
+		}
+		return cpt;
 	}
 	
 	private static  void normalize2(double [] p,AdjArrayW graph) {
@@ -112,22 +207,4 @@ public class Tools {
 		}
 		
 	}
-	
-	
-	public static double [] powerIteration4PR(AdjArrayW graph, double alpha, int t) {
-		int n = graph.nbNodes();
-		double [] p = new double[graph.size()];
-		for(int i=0; i < p.length; i++) {
-			if(graph.getListOfNeighbour(i) != null) {
-				p[i] = Math.pow(1.0/n, 2);
-			}
-		}
-		for (int i=0; i < t; i++) {
-			p = prodMatVec(graph, p);
-			normalize2(p, graph);
-		}
-		return p;
-	}
-	
-	
 }
