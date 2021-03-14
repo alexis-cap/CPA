@@ -7,7 +7,7 @@ import java.util.Set;
 
 import cpa.struct.tme1.AdjArray;
 import cpa.struct.tme1.DAG;
-import cpa.struct.tme1.DAG2;
+import cpa.struct.tme1.DAG;
 import cpa.struct.tme1.ElementList;
 import cpa.struct.tme1.List4DAG;
 import cpa.struct.tme1.Triangle;
@@ -93,7 +93,7 @@ public class Tools {
 	}
 	
 	
-	public static Set<Triangle> listTriangle(DAG2 dag) {
+	public static Set<Triangle> listTriangle(DAG dag) {
 		Set<Triangle> triangles = new HashSet<Triangle>();
 		List4DAG[] graph = dag.getGraph();
 		//parcours tous les noeuds du graph

@@ -19,6 +19,7 @@ public class AdjArray {
 			lecteur = new Scanner(file);
 			int id1, id2;
 			int cpt = 0;
+			
 			while(!lecteur.hasNextInt()) {
 				lecteur.nextLine();
 			}

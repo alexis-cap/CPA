@@ -18,6 +18,10 @@ public class AdjMatrix {
 		try {
 			lecteur = new Scanner(file);
 			int id1, id2;
+			
+			while(!lecteur.hasNextInt()) {
+				lecteur.nextLine();
+			}
 			while(lecteur.hasNext()) {
 				//recuperation des id de l'arrete
 				id1 = lecteur.nextInt();

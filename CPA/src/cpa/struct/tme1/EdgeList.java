@@ -12,9 +12,7 @@ public class EdgeList {
 	
 	protected List<Edge> graph;
 	protected int idMax;
-	
-	
-	
+
 	protected EdgeList() {
 		super();
 		this.graph = new LinkedList<Edge>();
@@ -28,6 +26,10 @@ public class EdgeList {
 			lecteur = new Scanner(file);
 			graph = new LinkedList<Edge>();
 			int id1, id2;
+			
+			while(!lecteur.hasNextInt()) {
+				lecteur.nextLine();
+			}
 			while(lecteur.hasNext()) {
 				//recuperation des id de l'arrete
 				id1 = lecteur.nextInt();
