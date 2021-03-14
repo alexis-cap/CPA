@@ -3,7 +3,6 @@ package cpa.tme.tme1.exo;
 import java.io.File;
 
 import cpa.struct.tme1.AdjArray;
-import cpa.struct.tme1.DAG;
 import cpa.tme.tme1.Tools;
 
 public class Tme1Exo3 {
