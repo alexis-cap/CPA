@@ -2,7 +2,6 @@ package cpa.struct.tme1;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
 

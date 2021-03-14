@@ -7,7 +7,6 @@ import java.util.Set;
 
 import cpa.struct.tme1.AdjArray;
 import cpa.struct.tme1.DAG;
-import cpa.struct.tme1.DAG;
 import cpa.struct.tme1.ElementList;
 import cpa.struct.tme1.List4DAG;
 import cpa.struct.tme1.Triangle;
@@ -71,25 +70,6 @@ public class Tools {
 			}
 		}
 		return max;
-	}
-	
-	public static Set<Triangle> listTriangle(DAG dag) {
-		Set<Triangle> triangles = new HashSet<Triangle>();
-		LinkedList<Integer>[] graph = dag.getGraph();
-		//parcours tous les noeuds du graph
-		for(int i=0; i < graph.length; i++) {
-			
-			if(graph[i] != null) {
-				for(int j : graph[i]) {
-				Set<Integer> commun = compareList(graph[i], graph[j]);
-					for (int k : commun) {
-						//ajout des triangles trouver
-						triangles.add(new Triangle(i, j, k));
-					}
-				}
-			}
-		}
-		return triangles;
 	}
 	
 	

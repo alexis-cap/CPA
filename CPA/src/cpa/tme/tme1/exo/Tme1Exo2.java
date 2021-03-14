@@ -1,7 +1,6 @@
 package cpa.tme.tme1.exo;
 
 import java.io.File;
-import java.util.Scanner;
 
 import cpa.struct.tme1.AdjArray;
 import cpa.struct.tme1.AdjMatrix;

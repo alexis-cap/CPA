@@ -10,14 +10,8 @@ import java.util.Set;
 
 public class EdgeList {
 	
-	protected List<Edge> graph;
+	protected List<Edge> graph; 
 	protected int idMax;
-
-	protected EdgeList() {
-		super();
-		this.graph = new LinkedList<Edge>();
-		this.idMax = -1;
-	}
 
 	public EdgeList(File file) {
 		idMax = -1;
@@ -26,7 +20,7 @@ public class EdgeList {
 			lecteur = new Scanner(file);
 			graph = new LinkedList<Edge>();
 			int id1, id2;
-			
+			// Passe l'en-tete du fichier
 			while(!lecteur.hasNextInt()) {
 				lecteur.nextLine();
 			}
@@ -44,6 +38,12 @@ public class EdgeList {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	protected EdgeList() {
+		super();
+		this.graph = new LinkedList<Edge>();
+		this.idMax = -1;
 	}
 
 	public List<Edge> getGraph() {
