@@ -2,7 +2,6 @@ package cpa.struct.tme1;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class AdjMatrix {
@@ -18,10 +17,11 @@ public class AdjMatrix {
 		try {
 			lecteur = new Scanner(file);
 			int id1, id2;
-			
+			// Passe l'en-tete du fichier
 			while(!lecteur.hasNextInt()) {
 				lecteur.nextLine();
 			}
+			//Parcous le fichier
 			while(lecteur.hasNext()) {
 				//recuperation des id de l'arrete
 				id1 = lecteur.nextInt();

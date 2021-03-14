@@ -13,17 +13,15 @@ public class AdjArray {
 	public AdjArray(File file) {
 		//initialisation du tableau 
 		graph = new LinkedList[idMaxofEdgeListF(file) + 1];
-
 		Scanner lecteur = null;
 		try {
 			lecteur = new Scanner(file);
 			int id1, id2;
-			int cpt = 0;
-			
+			// Passe l'en-tete du fichier
 			while(!lecteur.hasNextInt()) {
 				lecteur.nextLine();
 			}
-			
+			//Parcours le fichier
 			while(lecteur.hasNext()) {
 				//recuperation des id de l'arrete
 				id1 = lecteur.nextInt();
