@@ -1,42 +1,48 @@
 package cpa.struct.tme1;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdjArray {
 
-	private LinkedList<Integer> [] graph;
+	private List[] graph;
 	
 	@SuppressWarnings("unchecked")
 	public AdjArray(File file) {
 		//initialisation du tableau 
-		graph = new LinkedList[idMaxofEdgeListF(file) + 1];
-		Scanner lecteur = null;
-		try {
-			lecteur = new Scanner(file);
+		graph = new List[idMaxofEdgeListF(file) + 1];
+		//Scanner lecteur = null;
+		try (
+			BufferedReader br = new BufferedReader(new FileReader(file))){
+			
+			String line;
 			int id1, id2;
-			// Passe l'en-tete du fichier
-			while(!lecteur.hasNextInt()) {
-				lecteur.nextLine();
-			}
-			//Parcours le fichier
-			while(lecteur.hasNext()) {
-				//recuperation des id de l'arrete
-				id1 = lecteur.nextInt();
-				id2 = lecteur.nextInt();
-				//initialisation des Liste de voisins a la premiere arrete visiter
-				if(graph[id1] == null) {
-					graph[id1] = new LinkedList<Integer>();
+			String[] lineCoupe;
+			int i=0;
+			while((line = br.readLine())!=null) {
+				i++;
+				if(!line.contains("#")) {
+					System.out.println(i);
+					lineCoupe = line.split("\t");
+					id1 = Integer.parseInt(lineCoupe[0]);
+					id2 = Integer.parseInt(lineCoupe[1]);
+					
+					//initialisation des Liste de voisins a la premiere arrete visiter
+					if(graph[id1] == null) {
+						graph[id1] = new ArrayList<Integer>();
+					}
+					if(graph[id2] == null) {
+						graph[id2] = new ArrayList<Integer>();
+					}
+					graph[id1].add(id2);
+					graph[id2].add(id1);
 				}
-				if(graph[id2] == null) {
-					graph[id2] = new LinkedList<Integer>();
-				}
-				graph[id1].add(id2);
-				graph[id2].add(id1);
 			}
-			lecteur.close();
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -64,11 +70,11 @@ public class AdjArray {
 		return idMax;
 	}
 	
-	public LinkedList<Integer> getListOfNeighbour(int i) {
+	public List<Integer> getListOfNeighbour(int i) {
 		return graph[i];
 	}
 	
-	public LinkedList<Integer>[] getGraph() {
+	public List<Integer>[] getGraph() {
 		return graph;
 	}
 	

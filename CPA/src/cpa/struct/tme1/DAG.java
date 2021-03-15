@@ -2,7 +2,7 @@ package cpa.struct.tme1;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class DAG {
@@ -10,7 +10,7 @@ public class DAG {
 	protected List4DAG [] graph;
 	
 	public DAG(AdjArray adjArr) {
-		LinkedList<Integer> [] src = adjArr.getGraph();
+		List<Integer> [] src = adjArr.getGraph();
 		graph = new List4DAG[src.length];
 		
 		for(int i=0; i < src.length; i++) {
