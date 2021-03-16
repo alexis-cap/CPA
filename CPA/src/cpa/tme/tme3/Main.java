@@ -148,6 +148,12 @@ public class Main {
 		return (1/m) * droite ;
 	}
 	
+	private boolean louvain(EdgeList el) {
+		
+		
+		return false;
+	}
+	
 	
 
 }
