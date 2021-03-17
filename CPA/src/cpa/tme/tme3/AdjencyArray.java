@@ -3,12 +3,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
 public class AdjencyArray {
 	
-	private LinkedList<Integer> [] array;
+	private List<Integer> [] array;
 	
 	public AdjencyArray(Set<Edge> listOfEdge, int idMax) {
 		initArray(listOfEdge, idMax);
@@ -66,10 +67,10 @@ public class AdjencyArray {
 		}
 	}
 	
-	public LinkedList<Integer>[] getArray() {
+	public List<Integer>[] getArray() {
 		return array;
 	}
-	public LinkedList<Integer> getEdgeOfNode(int nodeId){
+	public List<Integer> getEdgeOfNode(int nodeId){
 		return array[nodeId];
 	}
 	
@@ -124,5 +125,9 @@ public class AdjencyArray {
 			}
 		}
 		return str;
+	}
+	
+	public List<Integer> voisins(int nodeId){
+		return array[nodeId];
 	}
 }

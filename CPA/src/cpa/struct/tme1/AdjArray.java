@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class AdjArray {
 
-	private List[] graph;
+	private List<Integer>[] graph;
 	
 	@SuppressWarnings("unchecked")
 	public AdjArray(File file) {
@@ -23,11 +23,9 @@ public class AdjArray {
 			String line;
 			int id1, id2;
 			String[] lineCoupe;
-			int i=0;
 			while((line = br.readLine())!=null) {
-				i++;
 				if(!line.contains("#")) {
-					System.out.println(i);
+					//System.out.println(i);
 					lineCoupe = line.split("\t");
 					id1 = Integer.parseInt(lineCoupe[0]);
 					id2 = Integer.parseInt(lineCoupe[1]);

@@ -1,6 +1,5 @@
 package cpa.tme.tme2;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import cpa.struct.tme1.Edge;
@@ -55,7 +54,7 @@ public class Tools {
 		//initialisation de b
 		double[] b = new double[graph.size()];
 		//Calcule produit Matriciel
-		LinkedList<Integer>[] g = graph.getGraph();
+		List<Integer>[] g = graph.getGraph();
 		for(int i=0; i < g.length; i++) {
 			if(g[i]!=null) {
 				double t = 1.0 / g[i].size();
@@ -87,7 +86,7 @@ public class Tools {
 		//initialisation de b
 		double[] b = new double[m.size()];
 		//Calcule produit Matriciel
-		LinkedList<Integer>[] graph = m.getGraph();
+		List<Integer>[] graph = m.getGraph();
 		for(int i=0; i < graph.length; i++) {
 			if(graph[i]!=null) {
 				for(int j : graph[i]) {
@@ -138,7 +137,7 @@ public class Tools {
 	
 	public static void pageRankIter(AdjArrayW graph, double alpha, int iter) {
 		
-		LinkedList<Integer>[] g = graph.getGraph();
+		List<Integer>[] g = graph.getGraph();
 		double [] tmpWeight;
 		
 		for(int i=0; i < iter; i++) {
@@ -163,7 +162,7 @@ public class Tools {
 	
 	public static int pageRankEps(AdjArrayW graph, double alpha, double epsilon) {
 		
-		LinkedList<Integer>[] g = graph.getGraph();
+		List<Integer>[] g = graph.getGraph();
 		double [] tmpWeight;
 		boolean encore = true;
 		int cpt = 0;

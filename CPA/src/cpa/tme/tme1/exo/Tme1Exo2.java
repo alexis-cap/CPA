@@ -21,7 +21,7 @@ public class Tme1Exo2 {
 		System.out.println("EdgeList : " + edgeList.nbEdges() + " liens et " + edgeList.nbNodes() + " noeuds.");
 
 		try {
-			AdjMatrix m = new AdjMatrix(file);
+			new AdjMatrix(file);
 		}catch (Exception e) {
 			System.err.println("Matrice trop volumineuse :\n" + e.getMessage());
 		}

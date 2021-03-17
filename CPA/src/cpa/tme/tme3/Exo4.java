@@ -1,7 +1,6 @@
 package cpa.tme.tme3;
+
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,56 +8,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
-public class Main {
-
+public class Exo4 {
+	
 	public static void main(String[] args) {
-
 		
-		//File f = new File("res.txt");
-		//creation graph
-		EdgeList el = new EdgeList();
+		AdjencyArray el = new AdjencyArray(new File(args[0]));
 		
-		//Generation du graphe
-		double p =0.3, q = 0.0001;
-		double r;
-		int nbNode = 400;
-		
-		try(FileOutputStream fOs= new FileOutputStream(new File("test2.txt"))){
-			
-			for(int i=0; i < nbNode; i++) {
-				for(int j=0; j < nbNode; j++) {
-					if(i != j) {
-						r = Math.random();
-						
-						if(i/100==j/100) {
-							//same cluster
-							if(r < p) {
-								el.addEge(new Edge(i, j));
-								String line =i+"\t" + j + "\n";
-								fOs.write(line.getBytes());
-							}
-						} else {
-							// different cluster
-							if(r < q) {
-								el.addEge(new Edge(i, j));
-								String line =i+"\t" + j + "\n";
-								fOs.write(line.getBytes());
-							}
-						}
-					}
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		System.out.println(el.size());
 		
 		long timeDebut = System.currentTimeMillis();
 		
 		//Label Propagation
 		Map<Integer, Pair<String, List<Integer>>> m = new HashMap<>();
-		for(int i=0; i<nbNode; i++) {
+		for(int i=0; i<el.nbNodes(); i++) {
 			List<Integer> voisins = el.voisins(i);
 			m.put(i, new Pair<String, List<Integer>>(i+"", voisins));
 		}
@@ -99,19 +61,8 @@ public class Main {
 		
 		
 		
-		//Louvain
-		
-
 	}
-
-//	private static void drawLabel(Map<Integer, Pair<String, List<Integer>>> m) {
-//		for(Entry<Integer, Pair<String, List<Integer>>> e : m.entrySet()) {
-//			if(e.getValue().getLabel().equals("")) System.out.println("ZZZZZZZZZ ++ " + e.getKey());
-//			System.out.println(e.getValue().getLabel());
-//		}
-//		
-//	}
-
+	
 	private static boolean isValid(Map<Integer, Pair<String, List<Integer>>> m) {
 		for (Entry<Integer, Pair<String, List<Integer>>> e : m.entrySet()) {
 			List<String> labelsVoisins = new ArrayList<String>();
@@ -126,7 +77,7 @@ public class Main {
 		return true;
 		
 	}
-
+	
 	private static String max(List<String> labelsVoisins) {
 		String res = "";
 		int i=0;
@@ -145,8 +96,6 @@ public class Main {
 		//System.out.println(res);
 		return res;
 	}
-
 	
 	
-
 }

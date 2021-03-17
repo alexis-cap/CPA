@@ -9,7 +9,6 @@ import cpa.struct.tme1.AdjArray;
 import cpa.struct.tme1.DAG;
 import cpa.struct.tme1.ElementList;
 import cpa.struct.tme1.List4DAG;
-import cpa.struct.tme1.Triangle;
 
 public class Tools {
 
@@ -73,8 +72,9 @@ public class Tools {
 	}
 	
 	
-	public static Set<Triangle> listTriangle(DAG dag) {
-		Set<Triangle> triangles = new HashSet<Triangle>();
+	public static int listTriangle(DAG dag) {
+//		Set<Triangle> triangles = new HashSet<Triangle>();
+		int res = 0;
 		List4DAG[] graph = dag.getGraph();
 		//parcours tous les noeuds du graph
 		for(int i=0; i < graph.length; i++) {
@@ -84,15 +84,18 @@ public class Tools {
 				while(n != null) {
 					//cherche le noeud commun
 					Set<Integer> commun = compareList(n, graph[n.id]);
-					for(int k : commun) {
-						triangles.add(new Triangle(i, n.id, k));
-					}
+//					for(int k : commun) {
+//						//triangles.add(new Triangle(i, n.id, k));
+//						res++;
+//					}
+					res = res + commun.size();
 					n = n.getNext();
 				}
 			}
 				
 		}
-		return triangles;
+		//return triangles;
+		return res;
 	}
 	
 	public static Set<Integer> compareList(ElementList n, List4DAG l) {
