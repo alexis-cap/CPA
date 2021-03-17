@@ -11,19 +11,17 @@ import cpa.struct.tme1.AdjArray;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("Debut");
 		AdjArray ad = new AdjArray(new File(args[0]));
-		System.out.println("Fin lecture");
+		
+		long timeDebut = System.currentTimeMillis();
+		
 		List<Integer> l = new ArrayList<Integer>();
-		//id Noeud ->  the number of neighbors of v that are not already in L
 		Map<Integer,Integer> nbNeighbors = new HashMap<>();
 		for(int i=0; i<ad.size(); i++) {
 			List<Integer> lN = ad.getListOfNeighbour(i);
 			if(lN !=null)
 				nbNeighbors.put(i, (int)lN.stream().filter(e -> !l.contains(e)).count());
 		}
-		
-		System.out.println("1");
 		
 		List<List<Integer>> d = new ArrayList<>(max(nbNeighbors)+1);
 		for(int i=0; i<max(nbNeighbors)+1; i++) {
@@ -33,11 +31,9 @@ public class Main {
 			d.get(e.getValue()).add(e.getKey());
 		}
 		
-		System.out.println("2");
 		int k=0;
 		//Repeat n times
 		for(int n = 0; n<ad.size(); n++) {
-			System.out.println(n);
 			int i;
 			for(i=0; i<d.size(); i++) {
 				if(d.get(i)!=null && !d.get(i).isEmpty()) {
@@ -46,8 +42,7 @@ public class Main {
 				}
 			}
 			if(i==d.size())break;
-			System.out.println(i +" " + d.size());
-			int v = d.get(i).get(0); //Probleme
+			int v = d.get(i).get(0);
 			d.get(i).remove(0);
 			
 			l.add(0, v);
@@ -60,7 +55,8 @@ public class Main {
 				}
 			}
 		}
-		System.out.println("k - dimension " + k);
+		long timeFin = System.currentTimeMillis();
+		System.out.println("k - dimension " + k + ", temps : " + (timeFin - timeDebut) * Math.pow(10, -9));
 		
 		
 		
