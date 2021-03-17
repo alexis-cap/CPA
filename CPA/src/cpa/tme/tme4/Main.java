@@ -23,6 +23,8 @@ public class Main {
 				nbNeighbors.put(i, (int)lN.stream().filter(e -> !l.contains(e)).count());
 		}
 		
+		System.out.println("1");
+		
 		List<List<Integer>> d = new ArrayList<>(max(nbNeighbors)+1);
 		for(int i=0; i<max(nbNeighbors)+1; i++) {
 			d.add(new ArrayList<>());
@@ -31,10 +33,11 @@ public class Main {
 			d.get(e.getValue()).add(e.getKey());
 		}
 		
+		System.out.println("2");
 		int k=0;
-		
 		//Repeat n times
 		for(int n = 0; n<ad.size(); n++) {
+			System.out.println(n);
 			int i;
 			for(i=0; i<d.size(); i++) {
 				if(d.get(i)!=null && !d.get(i).isEmpty()) {
@@ -42,7 +45,9 @@ public class Main {
 					break;
 				}
 			}
-			int v = d.get(i).get(0);
+			if(i==d.size())break;
+			System.out.println(i +" " + d.size());
+			int v = d.get(i).get(0); //Probleme
 			d.get(i).remove(0);
 			
 			l.add(0, v);
